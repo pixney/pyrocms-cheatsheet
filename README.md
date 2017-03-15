@@ -8,3 +8,6 @@ Pyro CMS 3 - CheatSheet
 ## Module
 * **Create Module** `php artisan make:addon my_project.module.library`
 * **Create Stream** `php artisan make:stream books my_project.module.library`
+* **Install Module** `php artisan module:install my_project.module.library`
+* **UnInstall Module** `php artisan module:uninstall my_project.module.library`
+* **ReInstall Module** `php artisan module:reinstall my_project.module.library`
