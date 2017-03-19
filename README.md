@@ -12,3 +12,11 @@ Pyro CMS 3 - CheatSheet
 * **UnInstall Module** `php artisan module:uninstall my_project.module.library`
 * **ReInstall Module** `php artisan module:reinstall my_project.module.library`
 * **Publish Addon** `php artisan addon:publish library`
+
+## Publish Commands
+* **Publish all addons to the resources/{ref}/addons folder** `php artisan addon:publish`
+* **Publish streams configuration to resources/streams** `php artisan streams:publish`
+* **Publish posts module only** `php artisan addon:publish anomaly.module.posts`
+* **Publish for an app other than the default one** `php artisan addon:publish anomaly.module.posts --app=my_ref`
+* **Publish streams config for an app other than your default one** `php artisan streams:publish --app=my_ref`
+
