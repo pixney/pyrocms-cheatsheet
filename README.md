@@ -20,3 +20,6 @@ Pyro CMS 3 - CheatSheet
 * **Publish for an app other than the default one** `php artisan addon:publish anomaly.module.posts --app=my_ref`
 * **Publish streams config for an app other than your default one** `php artisan streams:publish --app=my_ref`
 
+## Field Types
+* **Text** `anomaly.field_type.text`
+* **Textarea** `anomaly.field_type.textarea`
