@@ -23,3 +23,7 @@ Pyro CMS 3 - CheatSheet
 ## Field Types
 * **Text** `anomaly.field_type.text`
 * **Textarea** `anomaly.field_type.textarea`
+
+# Custom
+##
+* **Svgstore tag** `<svg><use xlink:href="#logo" /></svg>`
