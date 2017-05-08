@@ -13,6 +13,9 @@ Pyro CMS 3 - CheatSheet
 * **ReInstall Module** `php artisan module:reinstall my_project.module.library`
 * **Publish Addon** `php artisan addon:publish library`
 
+## Addon
+* **Create Addon** `php artisan make:addon my_project.plugin.widget`
+
 ## Publish Commands
 * **Publish all addons to the resources/{ref}/addons folder** `php artisan addon:publish`
 * **Publish streams configuration to resources/streams** `php artisan streams:publish`
