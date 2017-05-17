@@ -62,6 +62,20 @@ Pyro CMS 3 - CheatSheet
 * **"Users Module"** : `{{ trans("anomaly.module.users::addon.name") }} `
 * **boolean** : `{{ trans_exists("anomaly.module.users::field.bogus.name") }} `
 
+## Locale switch
+```
+<div class="locales">
+	{% set query = request_getQueryString() %}
+	{# {% for locale in config_get('streams::locales.enabled') %} #}
+	{% for locale in ['en', 'sv',] %}
+		<a
+			{% if config('app.locale') == locale %}class="current"{% endif %}
+			href="{{ url_locale(request_path(), locale) }}{% if query %}?{{ query }}{% endif %}">
+			{{ locale }}
+		</a>
+	{% endfor %}
+</div>
+```
 
 ## Url
 
