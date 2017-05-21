@@ -138,3 +138,6 @@ https://dev.twitter.com/cards/types/summary-large-image
 <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
 ```
 
+### SEO Cheat Sheets
+
+https://moz.com/blog/seo-cheat-sheet
