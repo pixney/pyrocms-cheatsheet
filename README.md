@@ -100,6 +100,27 @@ _The `memory_usage ` function returns the memory used by the request._
 _The `request_time ` function returns the elapsed time for the request._  
 `{{ request_time(3) }}`  
 
+## Minify Html
+`composer require nochso/html-compress-twig`
+
+Edit : `config/twigbridge.php`
+
+```
+'enabled' => [
+    'TwigBridge\Extension\Loader\Functions',
+    function() {
+        return new \nochso\HtmlCompressTwig\Extension(true);
+    }
+]
+```
+
+Add this to your layout(s)
+
+```
+{% htmlcompress %}
+Your html
+{% endhtmlcompress %}
+```
 
 # Custom
 * **Svgstore tag** `<svg><use xlink:href="#logo" /></svg>`
