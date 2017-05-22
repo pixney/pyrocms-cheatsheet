@@ -140,4 +140,5 @@ https://dev.twitter.com/cards/types/summary-large-image
 
 ### SEO Cheat Sheets
 
-https://moz.com/blog/seo-cheat-sheet
+https://moz.com/blog/seo-cheat-sheet  
+http://www.sharelinkgenerator.com/
