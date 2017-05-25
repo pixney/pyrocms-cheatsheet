@@ -35,6 +35,7 @@ Pyro CMS 3 - CheatSheet
 * **boolean**   : `{{ route_secure() }} `
 * **example.com**   : `{{ route_domain() }} `
 * **the route name if any**   : `{{ route_get_name() }} `
+* **Back to previous page** : `url_previous()`
 
 ## Session
 * **"bar"**   : `{{ session_get("foo") }} `
