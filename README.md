@@ -44,7 +44,8 @@ Pyro CMS 3 - CheatSheet
 * **boolean**   : `{{ session_has("foo") }} `
 
 ## Settings
-* **Get a settings value in twig ** : {{ setting('streams::name') }}
+* **Get a settings value in twig **  :  `{{ setting('streams::name') }}`
+
 ## String
 ### Hello World
 ```
