@@ -13,6 +13,12 @@ Pyro CMS 3 - CheatSheet
 * **ReInstall Module** `php artisan module:reinstall my_project.module.library`
 * **Publish Addon** `php artisan addon:publish library`
 
+## Migration
+* **Default Migration** : `php artisan make:migration create_more_fields --addon=example.module.test`
+* **Field Migration** : `php artisan make:migration create_more_fields --addon=example.module.test --fields`
+* **Stream Migrations** : `php artisan make:migration create_example_stream --addon=example.module.test --stream=widgets`
+* **Run Migration** : `php artisan migrate --all-addons`
+
 ## Addon
 * **Create Addon** `php artisan make:addon my_project.plugin.widget`
 
