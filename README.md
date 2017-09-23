@@ -1,17 +1,20 @@
-# pyrocms-cheatsheet
-Pyro CMS 3 - CheatSheet
+# Pyro - A Laravel Development Platform
+
+[Installing Pyrocms 3.4](installing_pyrocms_3.md)  
+[Using mix with pyrocms](using_mix.md)  
 
 ## Seeding
-* **Create Seed** `php artisan make:seeder GridSeeder`
-* **Run Seed** `php artisan db:seed --class=GridSeeder`
+
+* **Create seed** `php artisan make:seeder GridSeeder`  
+* **Run seed** `php artisan db:seed --class=GridSeeder`
 
 ## Module
-* **Create Module** `php artisan make:addon my_project.module.library`
-* **Create Stream** `php artisan make:stream books my_project.module.library`
-* **Install Module** `php artisan module:install my_project.module.library`
-* **UnInstall Module** `php artisan module:uninstall my_project.module.library`
-* **ReInstall Module** `php artisan module:reinstall my_project.module.library`
-* **Publish Addon** `php artisan addon:publish library`
+* **Create Module**  `php artisan make:addon my_project.module.library`  
+* **Create Stream**  `php artisan make:stream books my_project.module.library`  
+* **Install Module**  `php artisan module:install my_project.module.library`  
+* **UnInstall Module**  `php artisan module:uninstall my_project.module.library`  
+* **ReInstall Module**  `php artisan module:reinstall my_project.module.library`  
+* **Publish Addon**  `php artisan addon:publish library`
 
 ## Migration
 * **Default Migration** : `php artisan make:migration create_more_fields --addon=example.module.test`
@@ -29,9 +32,6 @@ Pyro CMS 3 - CheatSheet
 * **Publish for an app other than the default one** `php artisan addon:publish anomaly.module.posts --app=my_ref`
 * **Publish streams config for an app other than your default one** `php artisan streams:publish --app=my_ref`
 
-## Field Types
-* **Text** `anomaly.field_type.text`
-* **Textarea** `anomaly.field_type.textarea`
 
 ## Route
 
@@ -51,6 +51,13 @@ Pyro CMS 3 - CheatSheet
 
 ## Settings
 * **Get a settings value in twig**  :  `{{ setting('streams::name') }}`
+
+Getting a settings value in php:
+
+```
+$settings = app(SettingRepositoryInterface::class);
+$listId = $settings->value('pixney.module.campaigns::listId');
+```
 
 ## String
 ### Hello World
