@@ -20,21 +20,25 @@ First uninstall the old bootstrap `npm uninstall bootstrap-sass` then install bo
 #### Change app.scss
 Let's change `resources/assets/sass/app.scss` into:
 
+```
+// Variables  
+@import "variables";
 
-`// Variables`  
-`@import "variables";`
+// Bootstrap  
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+```
 
-`// Bootstrap`  
-`@import "node_modules/bootstrap/scss/bootstrap.scss";`
 
 
 As you will be able to see below, when we compile our css it will be stored as `public/css/app.css`. To make sure our theme use that css file, let's make sure the metadata.twig file located at `addons/default/driverless/driverless-theme/resources/views/partials/metadata.twig` references that css file.
 
 
-`{{ asset_add("theme.css", "public::css/app.css",["live"]) }}`  
-`<style type="text/css">`  
-`  {{ asset_inline("theme.css") }}`  
-`</style>`  
+```
+{{ asset_add("theme.css", "public::css/app.css",["live"]) }}  
+<style type="text/css">  
+  {{ asset_inline("theme.css") }}  
+</style>  
+```
 
 
 ## Edit webpack.mix.js
