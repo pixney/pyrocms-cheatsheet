@@ -12,9 +12,12 @@ I always delete everything in `addons/default/driverless/driverless-theme/` exce
 ### Install bootsrap
 First uninstall the old bootstrap `npm uninstall bootstrap-sass` then install bootstrap 4 :  `npm install bootstrap@4.0.0-beta`
 
-Copy `node_modules/bootstrap/scss/_variables.scss` into `resources/assets/sass/variables.scss`. `cp node_modules/bootstrap/scss/_variables.scss resources/assets/sass/variables.scss`
+#### Replace the old variables.scss file with a new one:  
+
+`cp node_modules/bootstrap/scss/_variables.scss resources/assets/sass/variables.scss`
 
 
+#### Change app.scss
 Let's change `resources/assets/sass/app.scss` into:
 
 
