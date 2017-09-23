@@ -10,7 +10,7 @@
 I always delete everything in `addons/default/driverless/driverless-theme/` except the `lang` and `views` directories. These are the only directories we need for now.
 
 ### Install bootsrap
-First uninstall the old bootstrap `npm uninstall bootstrap-sass` then install bootstrap 4 :  `npm install bootstrap@4.0.0-alpha.6`
+First uninstall the old bootstrap `npm uninstall bootstrap-sass` then install bootstrap 4 :  `npm install bootstrap@4.0.0-beta`
 
 Copy `node_modules/bootstrap/scss/_variables.scss` into `resources/assets/sass/variables.scss`.
 
