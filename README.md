@@ -174,3 +174,30 @@ alias ace='node ace'
 
 alias perm_d="find . -type d -exec chmod 755 {} +"
 alias perm_f="find . -type f -exec chmod 644 {} +"
+
+## Forms Module
+If we are using the (PRO) Forms module and want to render our own custom stuff we can simply do :
+
+```
+// Get the form and set it to redirect to our homepage if its successfully submitted.
+{% set form = form('forms','your_form_slug').redirect('/').get() %}
+
+// Catch the errors
+{% if form.hasErrors %}
+	Errors
+	{% for key,errors in form.errors.messages %}
+		{{key}}
+		{% for error in errors %}
+		    {{error}}
+		{% endfor %}
+	{% endfor %}
+{% endif %}
+
+// Our form output, that you will use to style your form your way
+{{ form.open({'class':'williams_contact_form'})|raw }}
+	{{ form.fields.name|raw }}
+	{{ form.fields.email|raw }}
+	{{ form.fields.message|raw }}
+	<button>Send</button>
+{{ form.close|raw }}
+```
