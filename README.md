@@ -3,6 +3,9 @@
 [Installing Pyrocms 3.4](installing_pyrocms_3.md)  
 [Using mix with pyrocms](using_mix.md)  
 
+## Mirgations
+[Create a grid with image field type](create_grid.php)  
+
 ## Seeding
 
 * **Create seed** `php artisan make:seeder GridSeeder`  
