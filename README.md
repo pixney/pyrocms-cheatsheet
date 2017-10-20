@@ -163,6 +163,12 @@ https://dev.twitter.com/cards/types/summary-large-image
 https://moz.com/blog/seo-cheat-sheet  
 http://www.sharelinkgenerator.com/
 
+### Other development related links
+* [Meta tags](https://megatags.co/) 
+* [Sharing buttons](http://sharingbuttons.io/)
+
+
+
 
 ### Russian Stuff
 ```
