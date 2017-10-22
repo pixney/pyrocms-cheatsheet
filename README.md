@@ -10,13 +10,15 @@
 
 * **Create seed** `php artisan make:seeder GridSeeder`  
 * **Run seed** `php artisan db:seed --class=GridSeeder`
+* **Seed Addon** `php artisan db:seed --addon=[addon]`
 
-## Module
-* **Create Module**  `php artisan make:addon my_project.module.library`  
+## Module/Extension
+* **Create Addon**  `php artisan make:addon my_project.module.library`  
 * **Create Stream**  `php artisan make:stream books my_project.module.library`  
 * **Install Module**  `php artisan module:install my_project.module.library`  
 * **UnInstall Module**  `php artisan module:uninstall my_project.module.library`  
 * **ReInstall Module**  `php artisan module:reinstall my_project.module.library`  
+* **ReInstall & Seed Module**  `php artisan module:reinstall my_project.module.library --seed`  
 * **Publish Addon**  `php artisan addon:publish library`
 
 ## Migration
