@@ -2,7 +2,7 @@
 
 [Installing Pyrocms 3.4](installing_pyrocms_3.md)  
 [Using mix with pyrocms](using_mix.md)  
-[Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/blob/master/organising-fields-in-tabs-for-pages-and-posts.md)
+[Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/Organising-fields-in-tabs-for-pages-and-posts)
 
 ## Mirgations
 [Create a grid with image field type](create_grid.php)  
