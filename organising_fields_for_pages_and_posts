@@ -1,0 +1,127 @@
+
+If you add a couple of fields to your pages or posts, you might want to organise them to make it easier on your clients to edit the page/post.
+
+One way of doing that, is to put different fields into tabs. Ill show you how i do it with Pyro CMS, the Laravel Development platform.
+
+## Listener
+I first create a listener : 
+
+    <?php
+    namespace Pixney\PixneyTheme\Listener;
+
+    use Illuminate\Foundation\Bus\DispatchesJobs;
+    use Anomaly\Streams\Platform\Ui\Form\Event\FormWasBuilt;
+    use Pixney\PixneyTheme\Listener\Command\CreateContentPagesFormSection;
+
+    class PostFormListener
+    {
+        use DispatchesJobs;
+
+        /**
+         * @param FormWasBuilt $event
+         */
+        public function handle(FormWasBuilt $event)
+        {
+            $builder   = $event->getBuilder();
+            $formClass = (new \ReflectionClass($builder))->getShortName();
+
+            if ($formClass == 'PageEntryFormBuilder')
+            {
+                $slug      = $builder->getChildFormStream('entry')->getSlug();
+                $namespace = $builder->getChildFormStream('entry')->getNamespace();
+                $form      = $builder->getForm('page');
+
+                if ($slug === "content_pages")
+                {
+                    $this->dispatch(new CreateContentPagesFormSection($form));
+                }
+            }
+        }
+    }
+    
+
+## CreateContentPagesFormSection Command
+The command i use to (re)arrange the fields within my page looks like this:
+
+    <?php
+
+    namespace Pixney\PixneyTheme\Listener\Command;
+
+    class CreateContentPagesFormSection
+    {
+
+        /**
+         * @var mixed
+         */
+        protected $form;
+        /**
+         * @var mixed
+         */
+        protected $pageSection;
+        /**
+         * @var mixed
+         */
+        protected $entrySection;
+
+        /**
+         * @var mixed
+         */
+        protected $entryFields;
+
+        /**
+         * @param $form
+         */
+        public function __construct(\Anomaly\Streams\Platform\Ui\Form\Form $form)
+        {
+            $this->form         = $form;
+            $this->pageSection  = $this->form->getSections()->get('page');
+            $this->entrySection = $this->form->getSections()->get('fields');
+            $this->entryFields  = $this->entrySection['fields'];
+        }
+
+        public function handle()
+        {
+
+            $this->pageSection['tabs']['header'] = [
+                'title'  => 'Header',
+                'fields' => [
+                    'entry_header_image',
+                    'entry_header_type',
+                    'entry_header_color',
+
+                ],
+            ];
+            $this->pageSection['tabs']['settings'] = [
+                'title'  => 'Settings',
+                'fields' => [
+                    'entry_body_class',
+                ],
+            ];
+
+            $this->pageSection['tabs']['seo']['fields'][] = 'entry_og_image';
+
+            $this->form->getSections()->put('page', $this->pageSection);
+
+            foreach ($this->pageSection['tabs'] as $tab)
+            {
+                foreach ($tab['fields'] as $field)
+                {
+                    if (in_array($field, $this->entryFields))
+                    {
+                        unset($this->entrySection['fields'][array_search($field, $this->entrySection['fields'])]);
+                    }
+                }
+            }
+
+            $this->form->getSections()->put('fields', $this->entrySection);
+        }
+    }
+
+## The Service Provider
+Finally add the listener to your Service Provider like so:
+
+    protected $listeners = [
+        'Anomaly\Streams\Platform\Ui\Form\Event\FormWasBuilt' => [
+           PostFormListener::class,
+        ]
+    ];
