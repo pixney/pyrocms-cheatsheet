@@ -38,6 +38,8 @@
 * **Publish for an app other than the default one** `php artisan addon:publish anomaly.module.posts --app=my_ref`
 * **Publish streams config for an app other than your default one** `php artisan streams:publish --app=my_ref`
 
+## Modification
+* **Modify a field config** `$this->fields()->findBySlugAndNamespace('foo', 'bar')->setAttribute('config', $newConfig)->save();`
 
 ## Route
 
