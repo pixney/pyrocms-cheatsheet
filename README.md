@@ -41,6 +41,24 @@
 ## Modification
 * **Modify a field config** `$this->fields()->findBySlugAndNamespace('foo', 'bar')->setAttribute('config', $newConfig)->save();`
 
+## Request
+
+### Get current paths
+* **http://domain.com** `{{ request_root() }}`
+* **http://domain.com/path** `{{request_url()}}`
+* **http://domain.com/path** `{{request_fullUrl()}}`
+* **path/to/a/post** `{{ request_path() }}`
+
+### Url Parameters
+
+* **http://domain.com?foo=bar**  `{{ request_get("foo") }} == bar`
+* **GET**  `{{ request_method() }}`
+* **http://domain.com/post/number-one**  `{{ request_segment(1) }} == post`
+
+### Booleans
+* **boolean**  `{{ request_is("myaccount/*", "account/*") }} `
+* **boolean**  `{{ request_ajax() }} `
+ 
 ## Route
 
 * **bar**   : `{{ route_parameter("foo", "default") }} `
@@ -50,6 +68,12 @@
 * **example.com**   : `{{ route_domain() }} `
 * **the route name if any**   : `{{ route_get_name() }} `
 * **Back to previous page** : `url_previous()`
+
+## Url
+
+* **"http://domain.com/example"** : `{{ url_to("example") }} `
+* **"https://domain.com/example"** : `{{ url_secure("example") }} `
+* **"users/password/forgot"** : `{{ url_route("anomaly.module.users::password.forgot") }} `
 
 ## Session
 * **"bar"**   : `{{ session_get("foo") }} `
@@ -102,21 +126,9 @@ $listId = $settings->value('pixney.module.campaigns::listId');
 </div>
 ```
 
-## Url
 
-* **"http://domain.com/example"** : `{{ url_to("example") }} `
-* **"https://domain.com/example"** : `{{ url_secure("example") }} `
-* **"users/password/forgot"** : `{{ url_route("anomaly.module.users::password.forgot") }} `
 
-## Request
-* **bar** : {{ request_get("foo") }} 
-* **GET** : {{ request_method() }} 
-* **http://** : `{{ request_root() }}`
-* **/path** : `{{ request_path() }}`
-* **foo** : `{{ request_segment(1) }}` 
-* **123** : `{{ request().route('id') }} `
-* **boolean** : `{{ request_is("myaccount/*", "account/*") }} `
-* **boolean** : `{{ request_ajax() }} `
+
 
 ## Other kinky stuff
 _The `memory_usage ` function returns the memory used by the request._  
