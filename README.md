@@ -111,6 +111,15 @@ $listId = $settings->value('pixney.module.campaigns::listId');
 * **"Users Module"** : `{{ trans("anomaly.module.users::addon.name") }} `
 * **boolean** : `{{ trans_exists("anomaly.module.users::field.bogus.name") }} `
 
+## Hreflang
+```
+{# {% for locale in config_get('streams::locales.enabled') %} #}
+{% set lq = request_getQueryString() %}
+{% for locale in ['en', 'sv'] %}
+<link rel="alternate" href="{{ url_locale(request_path(), locale) }}" hreflang="{{locale}}" title=""/>
+{% endfor %}
+```
+
 ## Locale switch
 ```
 <div class="locales">
@@ -125,10 +134,6 @@ $listId = $settings->value('pixney.module.campaigns::listId');
 	{% endfor %}
 </div>
 ```
-
-
-
-
 
 ## Other kinky stuff
 _The `memory_usage ` function returns the memory used by the request._  
