@@ -125,15 +125,15 @@ $listId = $settings->value('pixney.module.campaigns::listId');
 ## Locale switch
 ```
 <div class="locales">
-	{% set query = request_getQueryString() %}
-	{# {% for locale in config_get('streams::locales.enabled') %} #}
-	{% for locale in ['en', 'sv',] %}
-		<a
-			{% if config('app.locale') == locale %}class="current"{% endif %}
-			href="{{ url_locale(request_path(), locale) }}{% if query %}?{{ query }}{% endif %}">
-			{{ locale }}
-		</a>
-	{% endfor %}
+    {% set query = request_getQueryString() %} 
+    {# {% for locale in config_get('streams::locales.enabled') %} #}
+    {% for locale in ['en','sv',] %}
+    <a 
+    {{ config( 'app.locale')==locale ? 'class="current"'}}
+    href="{{ url_locale(request_path(), locale) }}{{ query ? '?'~query }}">
+        {{ locale }}
+    </a>
+    {% endfor %}
 </div>
 ```
 
