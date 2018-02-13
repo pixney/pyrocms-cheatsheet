@@ -4,7 +4,7 @@
 [Using mix with pyrocms](using_mix.md)  
 [Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/Organising-fields-in-tabs-for-pages-and-posts)
 
-## Mirgations
+## Migrations
 [Create a grid with image field type](create_grid.php)  
 
 ## Seeding
@@ -37,6 +37,9 @@
 * **Publish posts module only** `php artisan addon:publish anomaly.module.posts`
 * **Publish for an app other than the default one** `php artisan addon:publish anomaly.module.posts --app=my_ref`
 * **Publish streams config for an app other than your default one** `php artisan streams:publish --app=my_ref`
+
+## Images
+* **Crop image from top instead of center** `{{ thumbnail.image().fit(400, 400, null,'top')|raw }}` [Position](http://image.intervention.io/api/fit)
 
 ## Modification
 * **Modify a field config** `$this->fields()->findBySlugAndNamespace('foo', 'bar')->setAttribute('config', $newConfig)->save();`
