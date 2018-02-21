@@ -2,7 +2,7 @@
 
 [Installing Pyrocms 3.4](installing_pyrocms_3.md)  
 [Using mix with pyrocms](using_mix.md)  
-[Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/Organising-fields-in-tabs-for-pages-and-posts)
+[Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/Organising-fields-in-tabs-for-pages-and-posts)  
 [Customising Repeater Views](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/How-to-customise-repeater-views)  
 
 ## Migrations
