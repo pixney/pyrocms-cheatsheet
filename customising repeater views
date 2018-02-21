@@ -1,0 +1,436 @@
+# Customising repeater views
+In this guide we will take you through how to customise  the layout of repeaters. Instead of having a big long layout with stacked fields on top of each other you need to scroll through, we will be making it easy to manage
+
+![Customising repeater views](https://pixney.com/images/pyrocms/custrep_00.jpg)
+
+
+
+## Create the company module
+For this example, we are going to create a company module where we are able to add employees by using a repeater. For this to work, we need to create our fields and streams. In short, this is what needs to be done :
+
+* **Create addon** `php artisan make:addon pixney.module.company`
+* **Run composer dump** `composer dump`
+* **Create base stream** `php artisan make:stream companies pixney.module.company`
+* **Create employees stream** `php artisan make:stream employees pixney.module.company`
+
+When done, the following files are created for you:
+
+![Scaffolded files](https://pixney.com/images/pyrocms/custrep_02.jpg)
+
+## Creating necessary fields
+Let's begin our journey by specifying what fields our module needs within `2018_02_21_113547_pixney.module.company__create_company_fields.php`.
+
+
+```
+<?php
+
+use Anomaly\Streams\Platform\Database\Migration\Migration;
+
+class PixneyModuleCompanyCreateCompanyFields extends Migration
+{
+    /**
+     * The addon fields.
+     *
+     * @var array
+     */
+    protected $fields = [
+        'name'  => 'anomaly.field_type.text',
+        'slug'  => [
+            'type'   => 'anomaly.field_type.slug',
+            'config' => [
+                'slugify' => 'name',
+                'type'    => '_'
+            ],
+        ],
+        'email'                    => 'anomaly.field_type.email',
+        'phone'                    => 'anomaly.field_type.text',
+        'note'                     => 'anomaly.field_type.textarea',
+        'employees'                => [
+            'type'   => 'anomaly.field_type.repeater',
+            'config' => [
+                'related'        => \Pixney\CompanyModule\Employee\EmployeeModel::class,
+                'add_row'        => 'anomaly.field_type.repeater::button.add_row',
+            ]
+        ]
+    ];
+}
+
+```
+
+
+## Assign employees to the companies stream
+For our company stream (table) we would like to use the following fields (columns): _name_ , _slug_ and _employee_ (repeater with a multiple relationship to our employees).
+
+```
+<?php
+
+use Anomaly\Streams\Platform\Database\Migration\Migration;
+
+class PixneyModuleCompanyCreateCompaniesStream extends Migration
+{
+    /**
+     * The stream definition.
+     *
+     * @var array
+     */
+    protected $stream = [
+        'slug'         => 'companies',
+        'title_column' => 'name',
+        'translatable' => false,
+        'trashable'    => false,
+        'searchable'   => false,
+        'sortable'     => false,
+    ];
+
+    /**
+     * The stream assignments.
+     *
+     * @var array
+     */
+    protected $assignments = [
+        'name' => [
+            'required'     => true,
+        ],
+        'slug' => [
+            'unique'   => true,
+            'required' => true,
+        ],
+        'employees'
+    ];
+}
+
+
+```
+
+## Assign fields to our employee stream
+Our employee stream needs the following fields : _name_, _email_, _phone_, _note_ and _slug_.
+
+```
+<?php
+
+use Anomaly\Streams\Platform\Database\Migration\Migration;
+
+class PixneyModuleCompanyCreateEmployeesStream extends Migration
+{
+    /**
+     * The stream definition.
+     *
+     * @var array
+     */
+    protected $stream = [
+        'slug'          => 'employees',
+         'title_column' => 'name',
+         'translatable' => false,
+         'trashable'    => false,
+         'searchable'   => false,
+         'sortable'     => false,
+    ];
+
+    /**
+     * The stream assignments.
+     *
+     * @var array
+     */
+    protected $assignments = [
+        'name' => [
+            'required'     => true,
+        ],
+        'email' => [
+            'unique'   => true,
+            'required' => true,
+        ],
+        'phone',
+        'note'
+    ];
+}
+
+```
+
+## Install our addon
+To be able to access our module from within the control panel we need to install it. You got basically two options:
+
+* **CLI :**  `php artisan module:install company`
+* **Control Panel :** You are able to install the module within the control panel and the addon section.
+
+### Let's remove employee from our control panel
+
+![Tweak by removing employees form sections](https://pixney.com/images/pyrocms/custrep_03.jpg)
+
+In our example, we do not want employees to appear in the side nav. We are able to remove that link by deleting the reference to employees within **sections** in:  `pixney/company-module/src/CompanyModule.php` :
+
+```
+<?php
+
+namespace Pixney\CompanyModule;
+
+use Anomaly\Streams\Platform\Addon\Module\Module;
+
+class CompanyModule extends Module
+{
+    /**
+     * The navigation display flag.
+     *
+     * @var bool
+     */
+    protected $navigation = true;
+
+    /**
+     * The addon icon.
+     *
+     * @var string
+     */
+    protected $icon = 'fa fa-puzzle-piece';
+
+    /**
+     * The module sections.
+     *
+     * @var array
+     */
+    protected $sections = [
+        'companies' => [
+            'buttons' => [
+                'new_company',
+            ],
+        ]
+    ];
+}
+
+```
+
+
+
+## Customising the repeater layout
+Access the companies through the link on the left, the view appearing when you try to add a new employee is what we are to change. Instead of having stacked fields on top of each other, we creating a two columns view with the textarea on the right side of the other fields.
+
+A repeater view is loaded both through a normal http request, and an ajax request when adding records. 
+
+### Ajax request view
+To be able to edit this view, we need to define our view in a new form builder. We will first use the `newRepeaterFieldTypeFormBuilder` hook on our employee model telling it to use the new builder:
+
+```
+<?php
+
+namespace Pixney\CompanyModule\Employee;
+
+use Pixney\CompanyModule\Employee\Contract\EmployeeInterface;
+use Anomaly\Streams\Platform\Model\Company\CompanyEmployeesEntryModel;
+
+class EmployeeModel extends CompanyEmployeesEntryModel implements EmployeeInterface
+{
+    public function newRepeaterFieldTypeFormBuilder()
+    {
+        return app(\Pixney\CompanyModule\Employee\Support\RepeaterFieldType\FormBuilder::class);
+    }
+}
+
+```
+
+### Create the form builder:
+Within our form builder, we will specify what wrapper view to use:
+
+![Tweak by removing employees form sections](https://pixney.com/images/pyrocms/custrep_04.jpg)
+
+
+
+```
+<?php
+
+namespace Pixney\CompanyModule\Employee\Support\RepeaterFieldType;
+
+class FormBuilder extends \Anomaly\Streams\Platform\Ui\Form\FormBuilder
+{
+    protected $options    = [
+        'wrapper_view' => 'pixney.module.company::employee/repeater/wrapper'
+    ];
+}
+
+
+```
+
+### Create the wrapper
+![Tweak by removing employees form sections](https://pixney.com/images/pyrocms/custrep_05.jpg)
+
+```
+{% block content %}
+
+    {% for style in asset_styles("styles.css") %}
+        {{ style|raw }}
+    {% endfor %}
+
+    {% include "anomaly.field_type.repeater::partials/controls" %}
+
+    <div class="clearfix"></div>
+
+    {% include "anomaly.field_type.repeater::partials/fields" %}
+
+    {% include "pixney.module.company::employee/repeater/body" %}
+
+    {% for script in asset_scripts("scripts.js") %}
+        {{ script|raw }}
+    {% endfor %}
+
+{% endblock %}
+```
+
+### Create our form body
+Since our admin theme is using bootstrap 3, that's the formatting we are applying here.
+
+```
+<div class="repeater-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-24">
+                    {{ form.fields.name|raw }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-24">
+                    {{ form.fields.email|raw }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-24">
+                    {{ form.fields.phone|raw }}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            {{ form.fields.note|raw }}
+        </div>
+    </div>
+</div>
+```
+
+## A final step
+After completing the steps above and trying to add a new emplyee you will will see the new layout. However, if you save it the old view will appear on reload again.
+
+A final step left to do!
+
+### Create our input view
+The other view we need to define is the input view:
+
+```
+{{ asset_add('styles.css', 'anomaly.field_type.repeater::scss/repeater.scss') }}
+{{ asset_add("scripts.js", "anomaly.field_type.repeater::js/cookie.min.js") }}
+{{ asset_add('scripts.js', 'anomaly.field_type.repeater::js/input.js') }}
+{{ asset_add("scripts.js", "streams::js/table/jquery-sortable.js") }}
+{% set instance = str_random() %}
+
+<div {{
+    html_attributes(field_type.attributes)
+    }} data-instance="{{ instance }}">
+    <div class="repeater-list">
+
+        {% for form in field_type.forms %}
+            <div class="repeater-item" style="background:#fff;">
+
+                {% include "anomaly.field_type.repeater::partials/controls" %}
+
+                {% include "anomaly.field_type.repeater::partials/fields" %}
+
+                {% include "pixney.module.company::employee/repeater/body" %}
+
+            </div>
+
+        {% endfor %}
+    </div>
+
+    {% if not field_type.readonly %}
+        <div class="repeater-controls aba">
+
+            <a href="{{ url('repeater-field_type/form/' ~ field_type.id() ~ '?prefix=' ~ field_type.prefix) }}" class="add-row btn btn-sm btn-success" data-instance="{{ instance }}" data-loading="{{ trans('anomaly.field_type.repeater::message.loading') }}">
+                {{ trans(field_type.config.add_row ?: 'anomaly.field_type.repeater::button.add_row') }}
+            </a>
+
+            <a href="#" class="btn btn-sm btn-info" data-select="all">
+                {{ trans('anomaly.field_type.repeater::button.select_all') }}
+            </a>
+
+        </div>
+    {% endif %}
+
+</div>
+```
+### Define our input view
+We need to make sure our parent form builder `Pixney\CompanyModule\Company\Form\CompanyFormBuilder` renders this view for our employee field:
+
+```
+<?php
+
+namespace Pixney\CompanyModule\Company\Form;
+
+use Anomaly\Streams\Platform\Ui\Form\FormBuilder;
+
+class CompanyFormBuilder extends FormBuilder
+{
+    /**
+     * The form fields.
+     *
+     * @var array|string
+     */
+    protected $fields = [
+        '*',
+        'employees' => [
+            'input_view' => 'pixney.module.company::employee/repeater/input'
+        ],
+    ];
+
+    /**
+     * Additional validation rules.
+     *
+     * @var array|string
+     */
+    protected $rules = [];
+
+    /**
+     * Fields to skip.
+     *
+     * @var array|string
+     */
+    protected $skips = [];
+
+    /**
+     * The form actions.
+     *
+     * @var array|string
+     */
+    protected $actions = [];
+
+    /**
+     * The form buttons.
+     *
+     * @var array|string
+     */
+    protected $buttons = [
+        'cancel',
+    ];
+
+    /**
+     * The form options.
+     *
+     * @var array
+     */
+    protected $options = [];
+
+    /**
+     * The form sections.
+     *
+     * @var array
+     */
+    protected $sections = [];
+
+    /**
+     * The form assets.
+     *
+     * @var array
+     */
+    protected $assets = [];
+}
+
+```
+
+## You are done!
+We have achieved our goal with customising the repeater layout. The steps to customise grid views are almost the same. 
+
+By adding your own stylesheets and html markup, you are able to style this to the end of time.
