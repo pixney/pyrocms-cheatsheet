@@ -97,6 +97,37 @@ $settings = app(SettingRepositoryInterface::class);
 $listId = $settings->value('pixney.module.campaigns::listId');
 ```
 
+## Available Events
+Thanks @squatto
+```
+Anomaly\Streams\Platform\Addon\Addon->fire('entry_created')
+Anomaly\Streams\Platform\Addon\Addon->fire('entry_creating')
+Anomaly\Streams\Platform\Addon\Addon->fire('entry_deleted')
+Anomaly\Streams\Platform\Addon\Addon->fire('entry_saved')
+Anomaly\Streams\Platform\Addon\Addon->fire('entry_updated')
+Anomaly\Streams\Platform\Addon\Addon->fire('form_posted')
+Anomaly\Streams\Platform\Addon\Addon->fire('form_posting')
+Anomaly\Streams\Platform\Addon\Addon->fire('form_saved')
+Anomaly\Streams\Platform\Addon\Addon->fire('form_saving')
+Anomaly\Streams\Platform\Addon\Addon->fire('registered')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('built')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('make')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('post')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('posted')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('posting')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('querying')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('ready')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('saved')
+Anomaly\Streams\Platform\Ui\Form\FormBuilder->fire('saving')
+Anomaly\Streams\Platform\Ui\Table\Component\View\View->fire('querying')
+Anomaly\Streams\Platform\Ui\Table\TableBuilder->fire('built')
+Anomaly\Streams\Platform\Ui\Table\TableBuilder->fire('querying')
+Anomaly\Streams\Platform\Ui\Table\TableBuilder->fire('ready')
+Anomaly\Streams\Platform\Ui\Table\TableBuilder->fire('row_deleted')
+Anomaly\Streams\Platform\Ui\Table\TableBuilder->fire('rows_deleted')
+```
+
+
 ## String
 ### Hello World
 ```
