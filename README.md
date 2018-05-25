@@ -5,6 +5,19 @@
 [Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/Organising-fields-in-tabs-for-pages-and-posts)  
 [Customising Repeater Views](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/How-to-customise-repeater-views)  
 
+## Upgrading
+Always read Ryans blog posts. But in general just use the composer.json file of the version you want to upgrade to. Then:
+
+```
+composer update
+php artisan migrate --path=vendor/anomaly/streams-platform/migrations/application
+php artisan migrate --all-addons
+php artisan assets:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan twig:clear
+```
+
 ## Migrations
 [Create a grid with image field type](create_grid.php)  
 
