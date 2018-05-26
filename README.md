@@ -282,3 +282,46 @@ If we are using the (PRO) Forms module and want to render our own custom stuff w
 	<button>Send</button>
 {{ form.close|raw }}
 ```
+
+## Redirecting WWW.DOMAIN.COM -> DOMAIN.COM
+Create a middle wear as below, and then simply add it to the middlewarecollection. This is done by using the middleware attribute in your service provider.
+
+```
+protected $middleware = [
+    Http\Middleware\NonWWWMiddleware::class
+];
+```
+
+```
+<?php
+
+namespace Pixney\ThidrandiTheme\Http\Middleware;
+
+use Closure;
+
+/**
+ * Class NonWWWMiddleware
+ *
+ *  @author Pixney AB <hello@pixney.com>
+ *  @author William Åström <william@pixney.com>
+ *  
+ *  @link https://pixney.com
+ */
+use Illuminate\Support\Facades\Redirect;
+
+
+class NonWWWMiddleware
+{
+    public function handle($request, Closure $next)
+    {
+        if (starts_with($request->header('host'), 'www.')) {
+            $host = str_replace('www.', '', $request->header('host'));
+            $request->headers->set('host', $host);
+
+            return Redirect::to($request->fullUrl(), 301);
+        }
+
+        return $next($request);
+    }
+}
+```
