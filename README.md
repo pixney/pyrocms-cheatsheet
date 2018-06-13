@@ -329,4 +329,4 @@ If we are using the (PRO) Forms module and want to render our own custom stuff w
 {{ form.close|raw }}
 ```
 
-
+https://laravel-news.com/bash-aliases
