@@ -18,7 +18,7 @@ class CreatePostsRepeaterFields extends Migration
      * @var array
      */
     protected $fields = [
-        'posts_repeater_content'=> [
+        'posts_content'=> [
             'type'   => 'anomaly.field_type.wysiwyg',
             'name'   => 'Content',
             'locked' => false,
@@ -30,7 +30,7 @@ class CreatePostsRepeaterFields extends Migration
                 "height"        => 500,
             ]
         ],
-        'posts_repeater_image' => [
+        'posts_image' => [
             'type'   => 'anomaly.field_type.image',
             'name'   => 'Image - Full width',
             'locked' => false,
@@ -75,11 +75,11 @@ class CreatePostsRepeaterStream extends Migration
      * @var array
      */
     protected $assignments = [
-        'posts_repeater_content'=> [
+        'posts_content'=> [
             'translatable' => false,
             'required'     => true,
         ],
-        'posts_repeater_image'=> [
+        'posts_image'=> [
             'translatable' => false,
             'required'     => true,
         ]
@@ -111,9 +111,23 @@ class AssignPostsRepeaterToDefaultPosts extends Migration
      * created for the stream above.
      */
     protected $assignments = [
-        'posts_repeater'
+        'blog_grid'
+    ];
+
+    /**
+     * The addon fields.
+     *
+     * @var array
+     */
+    protected $fields = [
+        'blog_grid'=> [
+            'type'   => 'anomaly.field_type.repeater',
+            'name'   => 'Content',
+            'locked' => false,
+            'config' => [
+                "related"        => "repeater.posts_repeater",
+            ]
+        ]
     ];
 }
-
-
 ```
