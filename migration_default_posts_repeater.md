@@ -8,7 +8,7 @@
 
 use Anomaly\Streams\Platform\Database\Migration\Migration;
 
-class CreateBookSliderRepeaterFields extends Migration
+class CreatePostsRepeaterFields extends Migration
 {
     protected $namespace = 'repeater';
 
@@ -42,4 +42,78 @@ class CreateBookSliderRepeaterFields extends Migration
         ],
     ];
 }
+
+```
+
+## create_posts_repeater_stream
+`php artisan make:migration create_posts_repeater_stream`
+
+```
+<?php
+
+use Anomaly\Streams\Platform\Database\Migration\Migration;
+
+class CreatePostsRepeaterStream extends Migration
+{
+    protected $namespace = 'repeater';
+
+    /**
+     * The stream definition.
+     *
+     * @var array
+     */
+    protected $stream = [
+        'slug'         => 'posts_repeater',
+        'name'         => 'Posts Repeater',
+        'translatable' => true,
+        'versionable'  => false,
+    ];
+
+    /**
+     * The stream assignments.
+     *
+     * @var array
+     */
+    protected $assignments = [
+        'posts_repeater_content'=> [
+            'translatable' => false,
+            'required'     => true,
+        ],
+        'posts_repeater_image'=> [
+            'translatable' => false,
+            'required'     => true,
+        ]
+    ];
+}
+
+
+```
+
+## assign_posts_repeater_to_default_posts
+`php artisan make:migration assign_posts_repeater_to_default_posts`
+
+```
+<?php
+
+use Anomaly\Streams\Platform\Database\Migration\Migration;
+
+class AssignPostsRepeaterToDefaultPosts extends Migration
+{
+    protected $delete    = false;
+    protected $namespace ='posts';
+
+    protected $stream = [
+        'slug' => 'default_posts',
+    ];
+
+    /**
+     * These assignments will be
+     * created for the stream above.
+     */
+    protected $assignments = [
+        'posts_repeater'
+    ];
+}
+
+
 ```
