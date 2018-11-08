@@ -1,16 +1,25 @@
-# Create a repeater with fields attached to our default posts
+# Add a grid to posts
+I would like to use a grid when populating my post with content. To accomplish 
+that programmatically i have to go through a couple of quick steps:
 
-## create_posts_repeater_fields
-`php artisan make:migration create_posts_repeater_fields`
+* Create the fields i need in the grid namespace.
+* Create the grid i need and assign the previously created fields to it.
+* Finally i assign the grid to the default_posts stream.
 
+When you are done, simply run : `php artisan migrate`. If you would like to
+change something you can always rollback the migration by
+`php artisan migrate:rollback --step=x` where x is the number of migrations
+you would like to undo.
+
+## Create the fields i need in the grid namespace.
 ```
 <?php
 
 use Anomaly\Streams\Platform\Database\Migration\Migration;
 
-class CreatePostsRepeaterFields extends Migration
+class CreateBlogGridFields extends Migration
 {
-    protected $namespace = 'repeater';
+    protected $namespace = 'grid';
 
     /**
      * The addon fields.
@@ -30,32 +39,36 @@ class CreatePostsRepeaterFields extends Migration
                 "height"        => 500,
             ]
         ],
-        'posts_image' => [
-            'type'   => 'anomaly.field_type.image',
-            'name'   => 'Image - Full width',
+        'posts_image_caption'=> [
+            'type'   => 'anomaly.field_type.text',
+            'name'   => 'Image Caption',
             'locked' => false,
             'config' => [
-                'aspect_ratio'  => '16:9',
-                'min_height'    => 400,
+                "type"          => "text"
+            ]
+        ],
+        'posts_image' => [
+            'type'   => 'anomaly.field_type.image',
+            'name'   => 'Image',
+            'locked' => false,
+            'config' => [
                 "folders"       => ['blog'],
             ]
         ],
+      
     ];
 }
 
 ```
-
-## create_posts_repeater_stream
-`php artisan make:migration create_posts_repeater_stream`
-
+## Create the grid i need and assign the previously created fields to it.
 ```
 <?php
 
 use Anomaly\Streams\Platform\Database\Migration\Migration;
 
-class CreatePostsRepeaterStream extends Migration
+class CreateBlogGridImage extends Migration
 {
-    protected $namespace = 'repeater';
+    protected $namespace = 'grid';
 
     /**
      * The stream definition.
@@ -63,8 +76,8 @@ class CreatePostsRepeaterStream extends Migration
      * @var array
      */
     protected $stream = [
-        'slug'         => 'posts_repeater',
-        'name'         => 'Posts Repeater',
+        'slug'         => 'grid_image',
+        'name'         => 'Image',
         'translatable' => true,
         'versionable'  => false,
     ];
@@ -75,29 +88,24 @@ class CreatePostsRepeaterStream extends Migration
      * @var array
      */
     protected $assignments = [
-        'posts_content'=> [
-            'translatable' => false,
-            'required'     => true,
-        ],
         'posts_image'=> [
             'translatable' => false,
             'required'     => true,
+        ],
+        'posts_image_caption'=> [
+            'translatable' => false,
+            'required'     => false,
         ]
     ];
 }
-
-
 ```
-
-## assign_posts_repeater_to_default_posts
-`php artisan make:migration assign_posts_repeater_to_default_posts`
-
+## Finally i assign the grid to the default_posts stream.
 ```
 <?php
 
 use Anomaly\Streams\Platform\Database\Migration\Migration;
 
-class AssignPostsRepeaterToDefaultPosts extends Migration
+class AssignBlogGridToDefaultPages extends Migration
 {
     protected $delete    = false;
     protected $namespace ='posts';
@@ -121,13 +129,14 @@ class AssignPostsRepeaterToDefaultPosts extends Migration
      */
     protected $fields = [
         'blog_grid'=> [
-            'type'   => 'anomaly.field_type.repeater',
+            'type'   => 'anomaly.field_type.grid',
             'name'   => 'Content',
             'locked' => false,
             'config' => [
-                "related"        => "repeater.posts_repeater",
+                "related"        => [],
             ]
         ]
     ];
 }
+
 ```
