@@ -19,7 +19,9 @@ php artisan twig:clear
 ```
 
 ## Migrations
+[Create a grid and attach it to default_posts stream](migration_grid_to_posts.md)  
 [Create a grid with image field type](create_grid.php)  
+
 
 ## Seeding
 
