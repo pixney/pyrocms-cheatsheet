@@ -1,4 +1,4 @@
-# Add a grid to posts
+# Create grid migrations to use with posts 
 I would like to use a grid when populating my post with content. To accomplish 
 that programmatically i have to go through a couple of quick steps:
 
