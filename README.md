@@ -61,9 +61,51 @@ php artisan twig:clear
 ## Images
 * **Crop image from top instead of center** `{{ thumbnail.image().fit(400, 400, null,'top')|raw }}` [Position](http://image.intervention.io/api/fit)
 
-## Modification
-* **Modify a field config** `$this->fields()->findBySlugAndNamespace('foo', 'bar')->setAttribute('config', $newConfig)->save();`
+## Field Types
+### WYSIWYG - Changing Redactor configuration.
+To simplify for a user you might want to edit the buttons displayed. It can be done by
+publishing the field type using the following command `php artisan addon:publish anomaly.field_type.wysiwyg`.
 
+But you could also do it in a migration when creating the field type. The important step here, is
+to make sure you clear the configuration. And then use plugins and buttons to set what should be 
+available. 
+
+```
+"example" => [
+    "type"   => "anomaly.field_type.wysiwyg",
+    "config" => [
+        "default_value" => null,
+        "configuration" => "default",
+        "line_breaks"   => false,
+        "sync"          => true,
+        "height"        => 500,
+        "buttons"       => ['bold','lists','link'],
+        "plugins"       => ['source','fullscreen'],
+    ]
+]
+```
+
+### Modify field type configuration
+``` 
+    public function up()
+    {
+        $metaDescriptionConfig = [
+            'min' => null,
+            'max' => 300,
+        ];
+
+        if ($field = $this->fields()->findBySlugAndNamespace('meta_description', 'pages')) {
+            $field->setAttribute('instructions', 'Meta descriptions are HTML attributes that provide concise summaries of webpages. They are between one sentence to a short paragraph and appear underneath the blue clickable links in a search engine results page (SERP).')->save();
+            $field->setAttribute('warning', 'When left empty, the website will try to use the page introduction field. However, depending on a user\'s query, Google might pull meta description text from other areas on your page (in an attempt to better answer the searcher\'s query)')->save();
+            $field->setAttribute('config', $metaDescriptionConfig)->save();
+        };
+
+        if ($field = $this->fields()->findBySlugAndNamespace('meta_title', 'pages')) {
+            $field->setAttribute('instructions', "A title tag is an HTML element that specifies the title of a web page. Title tags are displayed on search engine results pages (SERPs) as the clickable headline for a given result, and are important for usability, SEO, and social sharing. The title tag of a web page is meant to be an accurate and concise description of a page's content.")->save();
+            $field->setAttribute('warning', 'When field is left empty, the website will try using the main title of the page.')->save();
+        };
+    }
+```
 ## Files / Images 
 * **/app/project/files/local/images/d61b5c3d5ea2bb829cbfbd05e68477b3.jpg?v=1513155180** `{{image('local://images/blackjaq.jpg').fit(500,300).quality(100).path()}}`
 ## Request
