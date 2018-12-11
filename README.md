@@ -91,7 +91,7 @@ available.
     {
         $metaDescriptionConfig = [
             'min' => null,
-            'max' => 300,
+            'max' => 290,
         ];
 
         if ($field = $this->fields()->findBySlugAndNamespace('meta_description', 'pages')) {
