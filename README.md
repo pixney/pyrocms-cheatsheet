@@ -334,6 +334,31 @@ http://www.sharelinkgenerator.com/
 
 
 
+### Laravel MIX 4 and SVG Spritemap plugin
+```
+npm uninstall svg-spritemap-webpack-plugin
+npm install svg-spritemap-webpack-plugin --save-dev
+const svgSourcePath = "resources/assets/svgs/*.svg";
+const svgSpriteDestination="resources/views/svgs.blade.php";
+
+mix.js('resources/assets/js/app.js', 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .webpackConfig({
+      plugins: [
+         new SVGSpritemapPlugin(
+            svgSourcePath, {
+               output: {
+                  filename: svgSpriteDestination,
+                  svgo: true
+               },
+            }
+         )
+      ]
+   })
+   .version([]).sourceMaps();
+```
+
+
 
 ### Russian Stuff
 ```
