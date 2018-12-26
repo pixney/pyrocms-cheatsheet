@@ -359,6 +359,21 @@ mix.js('resources/assets/js/app.js', 'public/js')
 ```
 
 
+### Remove index.php from urls, using runcloud.io
+```
+// nano pixney.location.root.indexphp.conf
+if ($request_uri ~* "^(.*/)index\.php(/?)(.*)") {
+    return 301 $1$3;
+}
+```
+
+```
+// nano pixney.location.main.indexphp.conf
+if ($request_uri ~* "^(.*/)index\.php$") {
+    return 301 $1;
+}
+```
+
 
 ### Russian Stuff
 ```
