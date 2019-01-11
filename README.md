@@ -108,7 +108,7 @@ available.
 ```
 
 ## Files / Images 
-* **/app/project/files/local/images/d61b5c3d5ea2bb829cbfbd05e68477b3.jpg?v=1513155180** `{{image('local://images/blackjaq.jpg').fit(500,300).quality(100).path()}}`
+* **/app/project/files/local/images/d61b5c3d5ea2bb829cbfbd05e68477b3.jpg?v=1513155180** `{{image('local://images/blackjaq.jpg').fit(500,300).quality(100).url()}}`
 ## Request
 
 ### Get current paths
