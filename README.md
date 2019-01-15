@@ -419,3 +419,25 @@ If we are using the (PRO) Forms module and want to render our own custom stuff w
 ```
 
 https://laravel-news.com/bash-aliases
+
+## Custom Form Validations where instances are a concern
+Cards is the stream, * will gets replaced with the instance number
+```
+    protected $rules = [
+        'entry_cards_*_fall_back' => [
+            'required_with:entry_cards_*_featured'
+        ]
+    ];
+
+    public function onReady(){
+        $rules = [];
+
+        foreach ($this->getRules() as $field => $field_rules){
+            $field = str_replace('*',$this->getOption('repeater_instance'), $field);
+            $field_rules = str_replace('*',$this->getOption('repeater_instance'), $field_rules);
+            $rules[$field] = $field_rules;
+        }
+
+        $this->setRules($rules);
+    }
+```
