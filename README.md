@@ -478,3 +478,43 @@ STANDARD_THEME
 TIME_FORMAT
 UNIT_SYSTEM [imperial or metric]
 ```
+
+## Validate a textarea that should contains a list of email addresses separated by comma.
+
+__By: Eric Leversen__
+
+```
+'email_list' => [
+    'instructions' => 'Separate each address using a comma',
+    'label'        => 'Bulk Subscribe',
+    'placeholder'  => 'Enter the email addresses to subscribe.',
+    'type'         => 'anomaly.field_type.textarea',
+    'rules'        => [
+        'required',
+        'valid_email_list',
+    ],
+    'validators'   => [
+        'valid_email_list' => [
+            'message' => false,
+            'handler' => ValidateEmailList::class,
+        ],
+    ],
+],
+```
+
+```
+public function handle(FormBuilder $builder, $attribute, $value)
+{
+    $invalid_emails=[];
+    foreach (explode(',',$value) as $email) {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $invalid_emails[]=$email;
+        }
+    }
+    if (! empty($invalid_emails) ) {
+        $builder->addFormError('email_list', 'These are not valid addresses: '.implode(', ',$invalid_emails));
+        return false;
+    }
+    return true;
+}
+```
