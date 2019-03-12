@@ -358,6 +358,19 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .version([]).sourceMaps();
 ```
 
+## Add svg sprite to your page
+```
+<div style="display:none">
+{% include 'theme::partials/svgs/svgs' %}
+</div>
+```
+## Use the svg
+```
+<svg class="icon icon--linkedin">
+<use xlink:href="#sprite-linkedin"/>
+</svg>
+```
+
 
 ### Remove index.php from urls, using runcloud.io
 ```
