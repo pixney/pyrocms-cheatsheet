@@ -18,6 +18,9 @@ php artisan view:clear
 php artisan twig:clear
 ```
 
+## Regular composer stuff
+`composer clearcache` is a good one to have handy when updating.
+
 ## Migrations
 [Create a grid and attach it to default_posts stream](migration_grid_to_posts.md)  
 [Create a grid with image field type](create_grid.php)  
