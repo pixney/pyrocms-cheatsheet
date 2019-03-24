@@ -4,6 +4,7 @@
 [Using mix with pyrocms](using_mix.md)  
 [Organising fields in tabs for pages and posts](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/Organising-fields-in-tabs-for-pages-and-posts)  
 [Customising Repeater Views](https://github.com/designbywilliam/pyrocms-cheatsheet/wiki/How-to-customise-repeater-views)  
+[Creating a block](Creating_a_block.md)  
 
 ## Upgrading
 Always read Ryans blog posts. But in general just use the composer.json file of the version you want to upgrade to. Then:
