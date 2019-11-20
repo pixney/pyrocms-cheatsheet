@@ -65,6 +65,19 @@ php artisan twig:clear
 ## Images
 * **Crop image from top instead of center** `{{ thumbnail.image().fit(400, 400, null,'top')|raw }}` [Position](http://image.intervention.io/api/fit)
 
+## Overriding templates values
+A common problem is not being able to override a block within the metadata partial from an extended view. This is something you may wanna do to change the og/twitter image for example. So what you can do is setting a value to template like this:
+
+** In metadata.twig **
+```
+<meta property="og:image" content="{{template.og_image | default( img("theme::images/og.jpg").url() }}" />
+```
+
+** In another view where you want another image to represent the page **
+```
+{% do template.set('og_image', img("theme::images/og.jpg").url() ) %} 
+```
+
 ## Field Types
 ### WYSIWYG - Changing Redactor configuration.
 To simplify for a user you might want to edit the buttons displayed. It can be done by
